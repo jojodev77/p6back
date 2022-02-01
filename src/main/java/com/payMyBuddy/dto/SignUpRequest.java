@@ -21,6 +21,10 @@ public class SignUpRequest {
 
 	@NotEmpty
 	private String displayName;
+	
+	String firstName;
+	
+	String lastName;
 
 	@NotEmpty
 	private String email;
@@ -32,6 +36,8 @@ public class SignUpRequest {
 
 	@NotEmpty
 	private String matchingPassword;
+	
+	
 
 	public SignUpRequest(String providerUserId, String displayName, String email, String password, SocialProvider socialProvider) {
 		this.providerUserId = providerUserId;

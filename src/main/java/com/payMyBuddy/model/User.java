@@ -56,6 +56,10 @@ public class User implements Serializable {
 
 	@Column(name = "DISPLAY_NAME")
 	private String displayName;
+	
+	String firstName;
+	
+	String lastName;
 
 	@Column(name = "created_date", nullable = false, updatable = false)
 	@Temporal(TemporalType.TIMESTAMP)

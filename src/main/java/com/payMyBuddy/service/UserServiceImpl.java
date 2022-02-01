@@ -1,5 +1,6 @@
 package com.payMyBuddy.service;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashSet;
@@ -17,6 +18,7 @@ import org.springframework.util.StringUtils;
 import com.payMyBuddy.dto.LocalUser;
 import com.payMyBuddy.dto.SignUpRequest;
 import com.payMyBuddy.dto.SocialProvider;
+import com.payMyBuddy.dto.UserReferenceTransaction;
 import com.payMyBuddy.exception.OAuth2AuthenticationProcessingException;
 import com.payMyBuddy.exception.UserAlreadyExistAuthenticationException;
 import com.payMyBuddy.model.Role;
@@ -68,6 +70,8 @@ public class UserServiceImpl implements UserService {
 		user.setDisplayName(formDTO.getDisplayName());
 		user.setEmail(formDTO.getEmail());
 		user.setPassword(passwordEncoder.encode(formDTO.getPassword()));
+		user.setFirstName(formDTO.getFirstName());
+		user.setLastName(formDTO.getLastName());
 		final HashSet<Role> roles = new HashSet<Role>();
 		roles.add(roleRepository.findByName(Role.ROLE_USER));
 		user.setRoles(roles);
@@ -120,5 +124,26 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public Optional<User> findUserById(Long id) {
 		return userRepository.findById(id);
+	}
+
+	@Override
+	public ArrayList<UserReferenceTransaction> referenceTransaction() {
+		ArrayList<User> listUser = (ArrayList<User>) userRepository.findAll();
+		UserReferenceTransaction referenceTransaction = new UserReferenceTransaction();
+		ArrayList<UserReferenceTransaction> listUserReferenceTransaction = new ArrayList<>();
+		
+		for(User u: listUser) {
+			referenceTransaction.setFirstName(u.getFirstName());
+			referenceTransaction.setLastName(u.getLastName());
+			referenceTransaction.setAccountReferenceTransaction(u.getUserAccountInformations().getAccountReferenceTransaction());
+			listUserReferenceTransaction.add(referenceTransaction);
+		}
+		return listUserReferenceTransaction;
+	}
+
+	@Override
+	public ArrayList<User> listUser() {
+		ArrayList<User> listUser = (ArrayList<User>) userRepository.findAll();
+		return listUser;
 	}
 }

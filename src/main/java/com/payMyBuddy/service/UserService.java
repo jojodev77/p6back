@@ -1,5 +1,6 @@
 package com.payMyBuddy.service;
 
+import java.util.ArrayList;
 import java.util.Map;
 import java.util.Optional;
 
@@ -8,6 +9,7 @@ import org.springframework.security.oauth2.core.oidc.OidcUserInfo;
 
 import com.payMyBuddy.dto.LocalUser;
 import com.payMyBuddy.dto.SignUpRequest;
+import com.payMyBuddy.dto.UserReferenceTransaction;
 import com.payMyBuddy.exception.UserAlreadyExistAuthenticationException;
 import com.payMyBuddy.model.User;
 
@@ -24,4 +26,8 @@ public interface UserService {
 	Optional<User> findUserById(Long id);
 
 	LocalUser processUserRegistration(String registrationId, Map<String, Object> attributes, OidcIdToken idToken, OidcUserInfo userInfo);
+	
+	ArrayList<UserReferenceTransaction> referenceTransaction();
+	
+	ArrayList<User> listUser();
 }
