@@ -1,0 +1,40 @@
+{
+  "groups": [
+    {
+      "name": "app",
+      "type": "com.payMyBuddy.config.AppProperties",
+      "sourceType": "com.payMyBuddy.config.AppProperties"
+    },
+    {
+      "name": "app.auth",
+      "type": "com.payMyBuddy.config.AppProperties$Auth",
+      "sourceType": "com.payMyBuddy.config.AppProperties",
+      "sourceMethod": "getAuth()"
+    },
+    {
+      "name": "app.oauth2",
+      "type": "com.payMyBuddy.config.AppProperties$OAuth2",
+      "sourceType": "com.payMyBuddy.config.AppProperties",
+      "sourceMethod": "getOauth2()"
+    }
+  ],
+  "properties": [
+    {
+      "name": "app.auth.token-expiration-msec",
+      "type": "java.lang.Long",
+      "sourceType": "com.payMyBuddy.config.AppProperties$Auth",
+      "defaultValue": 0
+    },
+    {
+      "name": "app.auth.token-secret",
+      "type": "java.lang.String",
+      "sourceType": "com.payMyBuddy.config.AppProperties$Auth"
+    },
+    {
+      "name": "app.oauth2.authorized-redirect-uris",
+      "type": "java.util.List<java.lang.String>",
+      "sourceType": "com.payMyBuddy.config.AppProperties$OAuth2"
+    }
+  ],
+  "hints": []
+}
