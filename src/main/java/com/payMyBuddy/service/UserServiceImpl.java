@@ -60,7 +60,8 @@ public class UserServiceImpl implements UserService {
 		Date now = Calendar.getInstance().getTime();
 		user.setCreatedDate(now);
 		user.setModifiedDate(now);
-		user = userRepository.save(user);
+	//	user.setUserAccountInformations(userAccountRegistrationService.attributeAccountInformations(formDTO));
+	//	user.getUserAccountInformations().setUser(user);
 		userRepository.flush();
 		return user;
 	}
@@ -70,15 +71,12 @@ public class UserServiceImpl implements UserService {
 		user.setDisplayName(formDTO.getDisplayName());
 		user.setEmail(formDTO.getEmail());
 		user.setPassword(passwordEncoder.encode(formDTO.getPassword()));
-		user.setFirstName(formDTO.getFirstName());
-		user.setLastName(formDTO.getLastName());
 		final HashSet<Role> roles = new HashSet<Role>();
 		roles.add(roleRepository.findByName(Role.ROLE_USER));
 		user.setRoles(roles);
 		user.setProvider(formDTO.getSocialProvider().getProviderType());
 		user.setEnabled(true);
-		user.setProviderUserId(formDTO.getProviderUserId());
-		user.setUserAccountInformations(userAccountRegistrationService.attributeAccountInformations(formDTO));
+		user = userRepository.save(user);
 		return user;
 	}
 
@@ -124,26 +122,5 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public Optional<User> findUserById(Long id) {
 		return userRepository.findById(id);
-	}
-
-	@Override
-	public ArrayList<UserReferenceTransaction> referenceTransaction() {
-		ArrayList<User> listUser = (ArrayList<User>) userRepository.findAll();
-		UserReferenceTransaction referenceTransaction = new UserReferenceTransaction();
-		ArrayList<UserReferenceTransaction> listUserReferenceTransaction = new ArrayList<>();
-		
-		for(User u: listUser) {
-			referenceTransaction.setFirstName(u.getFirstName());
-			referenceTransaction.setLastName(u.getLastName());
-			referenceTransaction.setAccountReferenceTransaction(u.getUserAccountInformations().getAccountReferenceTransaction());
-			listUserReferenceTransaction.add(referenceTransaction);
-		}
-		return listUserReferenceTransaction;
-	}
-
-	@Override
-	public ArrayList<User> listUser() {
-		ArrayList<User> listUser = (ArrayList<User>) userRepository.findAll();
-		return listUser;
 	}
 }

@@ -35,6 +35,7 @@ com\payMyBuddy\dto\LocalUser.class
 com\payMyBuddy\model\HistoryTransaction.class
 com\payMyBuddy\config\AppProperties.class
 com\payMyBuddy\config\RestAuthenticationEntryPoint.class
+com\payMyBuddy\dto\UserReferenceTransaction.class
 com\payMyBuddy\dto\JwtAuthenticationResponse.class
 com\payMyBuddy\model\UserPersonnalInformations.class
 com\payMyBuddy\security\oauth2\CustomOidcUserService.class

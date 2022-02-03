@@ -1,5 +1,8 @@
 package com.payMyBuddy.controller;
 
+import java.util.ArrayList;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -8,6 +11,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.payMyBuddy.config.CurrentUser;
 import com.payMyBuddy.dto.LocalUser;
+import com.payMyBuddy.dto.UserReferenceTransaction;
+import com.payMyBuddy.model.User;
+import com.payMyBuddy.service.UserService;
 import com.payMyBuddy.util.GeneralUtils;
 
 @RestController

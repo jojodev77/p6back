@@ -47,6 +47,7 @@ C:\Users\j.de-la-osa\formationJAVA\pgo\spring-boot-angular-oauth2-social-login-d
 C:\Users\j.de-la-osa\formationJAVA\pgo\spring-boot-angular-oauth2-social-login-demo\payMyBuddy\src\main\java\com\payMyBuddy\security\oauth2\OAuth2AuthenticationSuccessHandler.java
 C:\Users\j.de-la-osa\formationJAVA\pgo\spring-boot-angular-oauth2-social-login-demo\payMyBuddy\src\main\java\com\payMyBuddy\security\oauth2\user\GithubOAuth2UserInfo.java
 C:\Users\j.de-la-osa\formationJAVA\pgo\spring-boot-angular-oauth2-social-login-demo\payMyBuddy\src\main\java\com\payMyBuddy\security\oauth2\user\OAuth2UserInfoFactory.java
+C:\Users\j.de-la-osa\formationJAVA\pgo\spring-boot-angular-oauth2-social-login-demo\payMyBuddy\src\main\java\com\payMyBuddy\dto\UserReferenceTransaction.java
 C:\Users\j.de-la-osa\formationJAVA\pgo\spring-boot-angular-oauth2-social-login-demo\payMyBuddy\src\main\java\com\payMyBuddy\dto\SignUpRequest.java
 C:\Users\j.de-la-osa\formationJAVA\pgo\spring-boot-angular-oauth2-social-login-demo\payMyBuddy\src\main\java\com\payMyBuddy\exception\OAuth2AuthenticationProcessingException.java
 C:\Users\j.de-la-osa\formationJAVA\pgo\spring-boot-angular-oauth2-social-login-demo\payMyBuddy\src\main\java\com\payMyBuddy\dto\LoginRequest.java

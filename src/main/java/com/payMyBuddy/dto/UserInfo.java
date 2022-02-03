@@ -2,6 +2,9 @@ package com.payMyBuddy.dto;
 
 import java.util.List;
 
+import com.payMyBuddy.model.UserAccountInformations;
+
+import lombok.Data;
 import lombok.Value;
 
 @Value

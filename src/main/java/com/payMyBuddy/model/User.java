@@ -61,7 +61,7 @@ public class User implements Serializable {
 	
 	String lastName;
 
-	@Column(name = "created_date", nullable = false, updatable = false)
+	@Column(name = "created_date")
 	@Temporal(TemporalType.TIMESTAMP)
 	protected Date createdDate;
 

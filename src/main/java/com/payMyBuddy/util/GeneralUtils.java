@@ -40,6 +40,7 @@ public class GeneralUtils {
 	public static UserInfo buildUserInfo(LocalUser localUser) {
 		List<String> roles = localUser.getAuthorities().stream().map(item -> item.getAuthority()).collect(Collectors.toList());
 		User user = localUser.getUser();
+		System.out.println(user);
 		return new UserInfo(user.getId().toString(), user.getDisplayName(), user.getEmail(), roles);
 	}
 }
