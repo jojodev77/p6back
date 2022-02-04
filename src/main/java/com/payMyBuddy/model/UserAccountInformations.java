@@ -1,6 +1,7 @@
 package com.payMyBuddy.model;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -20,6 +21,7 @@ import lombok.NoArgsConstructor;
 public class UserAccountInformations {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "UserAccountInformations_ID")
 	long id;
 	
 	@OneToOne
@@ -27,9 +29,9 @@ public class UserAccountInformations {
 	
 	String accountReferenceTransaction;
 	
-	int number_account;
+	int numberAccount;
 	
-	double sold_account;
+	int soldAccount;
 	
 	@OneToOne(fetch = FetchType.EAGER,cascade = CascadeType.ALL)
 	UserPartnerAccount userPartner_account;

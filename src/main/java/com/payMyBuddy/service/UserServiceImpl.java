@@ -4,10 +4,15 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.core.oidc.OidcIdToken;
 import org.springframework.security.oauth2.core.oidc.OidcUserInfo;
@@ -15,6 +20,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
+import com.payMyBuddy.dto.JwtUserResponse;
 import com.payMyBuddy.dto.LocalUser;
 import com.payMyBuddy.dto.SignUpRequest;
 import com.payMyBuddy.dto.SocialProvider;
@@ -23,7 +29,9 @@ import com.payMyBuddy.exception.OAuth2AuthenticationProcessingException;
 import com.payMyBuddy.exception.UserAlreadyExistAuthenticationException;
 import com.payMyBuddy.model.Role;
 import com.payMyBuddy.model.User;
+import com.payMyBuddy.model.UserAccountInformations;
 import com.payMyBuddy.repo.RoleRepository;
+import com.payMyBuddy.repo.UserAccountInfomationsRepository;
 import com.payMyBuddy.repo.UserRepository;
 import com.payMyBuddy.security.oauth2.user.OAuth2UserInfo;
 import com.payMyBuddy.security.oauth2.user.OAuth2UserInfoFactory;
@@ -47,6 +55,9 @@ public class UserServiceImpl implements UserService {
 	
 	@Autowired
 	private UserAccountRegistrationService userAccountRegistrationService;
+	
+	@Autowired
+	private UserAccountInfomationsRepository userAccountInfomationsRepository;
 
 	@Override
 	@Transactional(value = "transactionManager")
@@ -60,8 +71,8 @@ public class UserServiceImpl implements UserService {
 		Date now = Calendar.getInstance().getTime();
 		user.setCreatedDate(now);
 		user.setModifiedDate(now);
-	//	user.setUserAccountInformations(userAccountRegistrationService.attributeAccountInformations(formDTO));
-	//	user.getUserAccountInformations().setUser(user);
+		user.setUserAccountInformations(userAccountRegistrationService.attributeAccountInformations(user));
+		//user.getUserAccountInformations().setUser(user);
 		userRepository.flush();
 		return user;
 	}
@@ -84,6 +95,9 @@ public class UserServiceImpl implements UserService {
 	public User findUserByEmail(final String email) {
 		return userRepository.findByEmail(email);
 	}
+	
+
+
 
 	@Override
 	@Transactional
@@ -123,4 +137,24 @@ public class UserServiceImpl implements UserService {
 	public Optional<User> findUserById(Long id) {
 		return userRepository.findById(id);
 	}
+
+	@Override
+	public JwtUserResponse getJwtUserResponseByEmail(String jwt, String email) {
+		if (email == null) {
+			ResponseEntity.status(HttpStatus.BAD_REQUEST).body("email client is null");
+		}
+		Optional<User> user = Optional.ofNullable(userRepository.foundByEmail(email));
+		if (!user.isPresent()) {
+			ResponseEntity.status(HttpStatus.NO_CONTENT).body("not user found");
+		}
+		List<String> roles = new ArrayList<String>();
+		roles.add(Role.ROLE_USER);
+	UserAccountInformations userAccountInformations = new UserAccountInformations();
+	userAccountInformations.setSoldAccount(user.get().getUserAccountInformations().getSoldAccount());
+		JwtUserResponse jwtUserResponse = new JwtUserResponse(jwt,user.get().getId(),  user.get().getEmail(),user.get().getDisplayName(),roles, userAccountInformations);
+		System.out.println("PUTINNNNNNNNNNNN" + jwtUserResponse);
+		return jwtUserResponse;
+	}
+
+
 }

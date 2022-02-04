@@ -16,10 +16,12 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.payMyBuddy.dto.ApiResponse;
 import com.payMyBuddy.dto.JwtAuthenticationResponse;
+import com.payMyBuddy.dto.JwtUserResponse;
 import com.payMyBuddy.dto.LocalUser;
 import com.payMyBuddy.dto.LoginRequest;
 import com.payMyBuddy.dto.SignUpRequest;
 import com.payMyBuddy.exception.UserAlreadyExistAuthenticationException;
+import com.payMyBuddy.model.User;
 import com.payMyBuddy.security.jwt.TokenProvider;
 import com.payMyBuddy.service.UserService;
 
@@ -40,15 +42,26 @@ public class AuthController {
 
 	@Autowired
 	TokenProvider tokenProvider;
+	
 
 	@PostMapping("/signin")
 	public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginRequest loginRequest) {
-		Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(loginRequest.getEmail(), loginRequest.getPassword()));
+		Authentication authentication = authenticationManager.authenticate(
+				new UsernamePasswordAuthenticationToken(loginRequest.getEmail(), loginRequest.getPassword()));
 		SecurityContextHolder.getContext().setAuthentication(authentication);
 		String jwt = tokenProvider.createToken(authentication);
-		LocalUser localUser = (LocalUser) authentication.getPrincipal();
-		return ResponseEntity.ok(new JwtAuthenticationResponse(jwt, GeneralUtils.buildUserInfo(localUser)));
+		System.out.println("resultCont2r!!!!!!" + userService.getJwtUserResponseByEmail(jwt, loginRequest.getEmail()));
+		return ResponseEntity.ok(userService.getJwtUserResponseByEmail(jwt, loginRequest.getEmail()));
 	}
+
+//	@PostMapping("/signin")
+//	public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginRequest loginRequest) {
+//		Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(loginRequest.getEmail(), loginRequest.getPassword()));
+//		SecurityContextHolder.getContext().setAuthentication(authentication);
+//		String jwt = tokenProvider.createToken(authentication);
+//		LocalUser localUser = (LocalUser) authentication.getPrincipal();
+//		return ResponseEntity.ok(new JwtAuthenticationResponse(jwt, GeneralUtils.buildUserInfo(localUser)));
+//	}
 
 	@PostMapping("/signup")
 	public ResponseEntity<?> registerUser(@Valid @RequestBody SignUpRequest signUpRequest) {
@@ -56,7 +69,8 @@ public class AuthController {
 			userService.registerNewUser(signUpRequest);
 		} catch (UserAlreadyExistAuthenticationException e) {
 			log.error("Exception Ocurred", e);
-			return new ResponseEntity<>(new ApiResponse(false, "Email Address already in use!"), HttpStatus.BAD_REQUEST);
+			return new ResponseEntity<>(new ApiResponse(false, "Email Address already in use!"),
+					HttpStatus.BAD_REQUEST);
 		}
 		return ResponseEntity.ok().body(new ApiResponse(true, "User registered successfully"));
 	}

@@ -7,6 +7,7 @@ import java.util.Optional;
 import org.springframework.security.oauth2.core.oidc.OidcIdToken;
 import org.springframework.security.oauth2.core.oidc.OidcUserInfo;
 
+import com.payMyBuddy.dto.JwtUserResponse;
 import com.payMyBuddy.dto.LocalUser;
 import com.payMyBuddy.dto.SignUpRequest;
 import com.payMyBuddy.dto.UserReferenceTransaction;
@@ -26,6 +27,8 @@ public interface UserService {
 	Optional<User> findUserById(Long id);
 
 	LocalUser processUserRegistration(String registrationId, Map<String, Object> attributes, OidcIdToken idToken, OidcUserInfo userInfo);
+
+	public JwtUserResponse getJwtUserResponseByEmail(String jwt, String email);
 	
 //	ArrayList<UserReferenceTransaction> listReferenceTransaction();
 //	
